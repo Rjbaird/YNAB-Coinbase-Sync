@@ -3,9 +3,6 @@ import requests
 from datetime import date
 from dotenv import load_dotenv
 
-from ynab import *
-from coinbase import *
-from bot import *
 
 load_dotenv()
 
