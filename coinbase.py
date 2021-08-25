@@ -1,4 +1,4 @@
-import os, requests, hmac, hashlib, time, requests, base64 
+import os, requests, hmac, hashlib, time, requests, base64
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,27 +9,49 @@ SECRET = os.getenv('COINBASE_SECRET')
 
 
 def get_coinbase_account_balance(BASE_URL, KEY, SECRET):
-    
+    auth = get_auth()
+    response = requests.get(f'{BASE_URL}/accounts', auth=auth)
+    data = response.json()
+    print(data)
+
+def get_auth():
+
     timestamp = str(int(time.time()))
     path = '/accounts'
     method = 'GET'
-    message = f'{timestamp}{method}{path}'.encode()
-    # hmac_key = base64.b64decode(SECRET)
+    body = b""
+    headers = {}
+    message = f'{timestamp}{method}{path}{body}'.encode()
     hmac_key = bytes(SECRET, 'UTF-8')
     signature = hmac.new(hmac_key, message, hashlib.sha256).hexdigest()
-    # signature_b64 = base64.b64encode(signature.hexdigest()).decode('utf-8')
-    
-    
-    headers = {
-        'CB-ACCESS-TIMESTAMP': timestamp,
-        'CB-ACCESS-KEY': KEY,
-        'CB-ACCESS-SIGN': signature,
-        'CB-VERSION': '2021-02-13',
-        'contentType': 'application/json'
+    request = {
+        body: body,
+        method: method,
+        path: path,
+        headers: {
+            'CB-ACCESS-TIMESTAMP': timestamp,
+            'CB-ACCESS-KEY': KEY,
+            'CB-ACCESS-SIGN': signature,
+        }
     }
 
-    response = requests.get(f'{BASE_URL}/accounts', headers=headers)
-    data = response.json()
-    print(data)
+    try:
+        body = request.body.decode()
+        if body == "{}":
+            request.body = b""
+        body = ''
+    except AttributeError:
+        request.body = b""
+        body = ''
+
+        message = timestamp + request.method + request.path_url + body
+        signature = hmac.new(
+            SECRET.encode(), message.encode(), hashlib.sha256).hexdigest()
+        request.headers.update({
+            'CB-ACCESS-SIGN': signature,
+            'CB-ACCESS-TIMESTAMP': timestamp,
+            'CB-ACCESS-KEY': KEY,
+        })
+        return request
 
 get_coinbase_account_balance(BASE_URL, KEY, SECRET)
