@@ -1,6 +1,4 @@
-import os
-import random
-import discord
+import os, random, discord
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,4 +37,5 @@ async def send_message(message):
     await message.channel.send()
     print('Message Sent!')
 
-client.run(BOT_TOKEN)
+def start_discord_bot(BOT_TOKEN):
+    client.run(BOT_TOKEN)

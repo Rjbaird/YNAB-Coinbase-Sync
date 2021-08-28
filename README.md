@@ -2,8 +2,6 @@
 
 https://docs.pro.coinbase.com/?python#introduction
 
-https://api.youneedabudget.com/v1
-
 https://www.reddit.com/r/CoinBase/comments/foebre/python_api/flhz510/
 
 https://realpython.com/how-to-make-a-discord-bot-python/
@@ -40,7 +38,9 @@ The script should run every day at 8am.
 - bot.py will send the message thru the Discord API with the adjustment amount to my Bairrya server as Money Bot
 
 **Tech Stack**
-- Python/Selenium
-- YNAB API
-- Discord API
+- Python
+- [YNAB API](https://api.youneedabudget.com/v1)
+- [Discord API](https://realpython.com/how-to-make-a-discord-bot-python/)
+- [Coinbase Wallet API](https://developers.coinbase.com/docs/wallet/api-key-authentication)
+- [CoinAPI.io](https://www.coinapi.io/)
 

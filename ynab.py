@@ -1,5 +1,4 @@
-import os
-import requests
+import os, requests
 from datetime import date
 from dotenv import load_dotenv
 
@@ -13,7 +12,7 @@ ACCOUNT_ID = os.getenv('ACCOUNT_ID')
 today = date.today()
 transactionDate = today.strftime('%Y-%m-%d')
 
-async def get_ynab_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID):
+def get_ynab_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID):
     """
     Makes a GET request to the YNAB API to retrive the current balance of an account
     Args:
@@ -73,4 +72,3 @@ def update_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE)
     print(f'{data}')
     return data
 
-update_account_balance(YNAB_URL, TOKEN, BUDGET_ID, ACCOUNT_ID, 10000, transactionDate)

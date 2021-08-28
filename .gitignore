@@ -143,5 +143,6 @@ dmypy.json
 cython_debug/
 
 node_modules
-
+.vscode
+.DS_Store
 # End of https://www.toptal.com/developers/gitignore/api/python
