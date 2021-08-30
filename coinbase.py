@@ -37,16 +37,15 @@ class CoinbaseWalletAuth(AuthBase):
         return request
 
 
-BASE_URL = 'https://api.coinbase.com/v2/'
 
-
-def get_wallet_data(BASE_URL, API_KEY, API_SECRET):
+def get_wallet_data(API_KEY, API_SECRET):
     # Get data on wallets in ascending order
     auth = CoinbaseWalletAuth(API_KEY, API_SECRET)
     params = {'limit': 100, 'order': 'asc'}
-    r = requests.get(BASE_URL + 'accounts', auth=auth, params=params)
+    r = requests.get(f'https://api.coinbase.com/v2/accounts', auth=auth, params=params)
     json = json.loads(r.text)
     data = json['data']
+    print(data)
     return data
 
 def get_account_balance(data):

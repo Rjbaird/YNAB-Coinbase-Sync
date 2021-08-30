@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-YNAB_URL = 'http://api.youneedabudget.com/v1'
 TOKEN = os.getenv('YNAB_TOKEN')
 BUDGET_ID = os.getenv('BUDGET_ID')
 ACCOUNT_ID = os.getenv('ACCOUNT_ID')
@@ -12,7 +11,7 @@ ACCOUNT_ID = os.getenv('ACCOUNT_ID')
 today = date.today()
 transactionDate = today.strftime('%Y-%m-%d')
 
-def get_ynab_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID):
+def get_ynab_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID):
     """
     Makes a GET request to the YNAB API to retrive the current balance of an account
     Args:
@@ -32,15 +31,14 @@ def get_ynab_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID):
         'contentType': 'application/json'
     }
 
-    response = requests.get(f'{BASE_URL}/budgets/{BUDGET_ID}/accounts/{ACCOUNT_ID}', headers=headers, params=params)
+    response = requests.get(f'http://api.youneedabudget.com/v1/budgets/{BUDGET_ID}/accounts/{ACCOUNT_ID}', headers=headers, params=params)
     data = response.json()
     accountData = data['data']['account']
     accountBalance = accountData['balance']
     print(f'Account balance: ${accountBalance}')
-
     return accountBalance
 
-def update_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE):
+def update_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE):
     """
     Makes a POST request to the YNAB API 
 
@@ -53,7 +51,7 @@ def update_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE)
         DATE ([str]): Transaction date in the following format: 'Year-Month-Day' ie 2021-10-03
 
     Returns:
-        [type]: [description]
+        [dir]: YNAB API response data from the POST request
     """    
     transactionData = { 
         'transaction': {
@@ -67,8 +65,7 @@ def update_account_balance(BASE_URL, TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE)
     }
     
     headers = {'Authorization': 'Bearer ' + TOKEN}
-    response = requests.post(f'{BASE_URL}/budgets/{BUDGET_ID}/transactions', json=transactionData, headers=headers)
+    response = requests.post(f'http://api.youneedabudget.com/v1/budgets/{BUDGET_ID}/transactions', json=transactionData, headers=headers)
     data = response.json()
-    print(f'{data}')
     return data
 
