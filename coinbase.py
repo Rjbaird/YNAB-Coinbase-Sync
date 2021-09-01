@@ -1,26 +1,17 @@
-import os, hmac, hashlib, time, requests
+import hmac, hashlib, time, requests
 from requests.auth import AuthBase
-from dotenv import load_dotenv
 from exchange import get_exchange_rate
 
-load_dotenv()
-
-# Before implementation, set environmental variables with the names API_KEY and API_SECRET
-API_KEY = os.getenv('COINBASE_KEY')
-API_SECRET = os.getenv('COINBASE_SECRET')
-EXCHANGE_KEY = os.getenv('EXCHANGE_KEY')
-
-
-# Create custom authentication for Coinbase API
 class CoinbaseWalletAuth(AuthBase):
+    """ Creates a custom Class for authentication with the Coinbase API
+    Taken from https://stackoverflow.com/questions/66619124/coinbase-api-standard-python-example-returns-invalid-signature
+    """    
     def __init__(self, api_key, secret_key):
         self.api_key = api_key
         self.secret_key = secret_key
 
     def __call__(self, request):
         timestamp = str(int(time.time()))
-
-        # https://stackoverflow.com/questions/66619124/coinbase-api-standard-python-example-returns-invalid-signature
         try:
             body = request.body.decode()
             if body == "{}":
@@ -40,7 +31,15 @@ class CoinbaseWalletAuth(AuthBase):
         return request
 
 def get_wallet_data(API_KEY, API_SECRET):
-    # Get data on wallets in ascending order
+    """Makes a GET request to the Coinbase API to retrive the current balance of each wallet in an account
+
+    Args:
+        API_KEY [str]: Coinbase API Key
+        API_SECRET [str]: Coinbase API Secret
+
+    Returns:
+        [dir]: Directory of account data from the Coinbase API GET request in ascending order
+    """    
     auth = CoinbaseWalletAuth(API_KEY, API_SECRET)
     params = {'limit': 100, 'order': 'asc'}
     r = requests.get(f'https://api.coinbase.com/v2/accounts', auth=auth, params=params)
@@ -48,7 +47,17 @@ def get_wallet_data(API_KEY, API_SECRET):
     data = json['data']
     return data
 
-def get_coinbase_account_balance(data):
+def get_coinbase_account_balance(EXCHANGE_KEY, data):
+    """Calculates total balance in a Coinbase account.
+    Loops thru each wallet with data from the Coinbase API, ignores wallets with zero balance and calculates the balance of each wallet into USD.
+
+    Args:
+        EXCHANGE_KEY [str]: Coin.io API Key. Used for calcuating the current exchange rate
+        data [dir]: Directory of data pulled from the get_wallet_data function and the Coinbase API
+
+    Returns:
+        [float]: Returns total portfolio balance as a float
+    """   
     portfolio_total = 0
     for wallet in data:
         name = wallet['name']
