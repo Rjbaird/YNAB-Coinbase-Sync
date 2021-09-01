@@ -3,7 +3,6 @@ from datetime import date
 from dotenv import load_dotenv
 
 from ynab import get_ynab_account_balance, update_account_balance
-from coinbase import CoinbaseWalletAuth, get_wallet_data
 from exchange import get_exchange_rate
 from bot import send_message
 
@@ -26,7 +25,6 @@ YNAB_transaction_date = today.strftime('%Y-%m-%d')
 ynab_balance = get_ynab_account_balance(YNAB_TOKEN, BUDGET_ID, ACCOUNT_ID)
 wallet_data = coinbase.get_wallet_data(COIN_KEY, COIN_SECRET)
 portfolio_balance = coinbase.get_coinbase_account_balance(wallet_data)
-
 
 def create_update_message(account_change, current_value):
     if account_change >= 0:

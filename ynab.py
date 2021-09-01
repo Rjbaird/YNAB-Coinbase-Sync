@@ -1,15 +1,4 @@
-import os, requests
-from datetime import date
-from dotenv import load_dotenv
-
-load_dotenv()
-
-TOKEN = os.getenv('YNAB_TOKEN')
-BUDGET_ID = os.getenv('BUDGET_ID')
-ACCOUNT_ID = os.getenv('ACCOUNT_ID')
-
-today = date.today()
-transactionDate = today.strftime('%Y-%m-%d')
+import requests
 
 def get_ynab_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID):
     """
@@ -58,7 +47,6 @@ def update_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE):
         'amount': AMOUNT,
         'payee_name': 'Coinbase',
         'cleared': 'cleared',
-        # 'flag_color': 'green',
         }
     }
     
