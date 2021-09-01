@@ -22,9 +22,7 @@ def get_ynab_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID):
     Returns:
         [int]: Returns an integer from the current account balance
     """
-    headers = {
-        'Authorization': 'Bearer ' + TOKEN
-    }
+    headers = {'Authorization': 'Bearer ' + TOKEN}
     params = {
         'method': 'GET',
         'headers': headers,
@@ -35,7 +33,7 @@ def get_ynab_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID):
     data = response.json()
     accountData = data['data']['account']
     accountBalance = accountData['balance']
-    print(f'Account balance: ${accountBalance}')
+    print(f'YNAB Account balance: ${accountBalance}')
     return accountBalance
 
 def update_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE):
