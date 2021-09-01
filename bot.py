@@ -30,3 +30,10 @@ async def send_message(message):
 
 def start_discord_bot(BOT_TOKEN):
     client.run(BOT_TOKEN)
+
+def create_update_message(account_change, current_value):
+    if account_change >= 0:
+        return f'Coinbase adjustment created! Your Coinbase account is now at ${current_value}, up ${account_change} from last week 🥳'
+    else:
+        account_change = account_change * -1
+        return f'Coinbase adjustment created! Your Coinbase account is now at ${current_value}, down -${account_change} from last week 💩'

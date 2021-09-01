@@ -55,3 +55,5 @@ def update_account_balance(TOKEN, BUDGET_ID, ACCOUNT_ID, AMOUNT, DATE):
     data = response.json()
     return data
 
+def get_account_change(old_balance, new_balance):
+    return new_balance - old_balance
