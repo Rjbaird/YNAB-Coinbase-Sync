@@ -1,46 +1,52 @@
-# Connecting Coinbase to YNAB
 
-https://docs.pro.coinbase.com/?python#introduction
+# YNAB & Coinbase Sync
 
-https://www.reddit.com/r/CoinBase/comments/foebre/python_api/flhz510/
+Currently, there is no official way to sync a [Coinbase](https://www.coinbase.com/) account to YNAB ([You Need A Budget](https://www.youneedabudget.com/)) for an accurate view of your Net Worth.
 
-https://realpython.com/how-to-make-a-discord-bot-python/
+This Python script uses the YNAB and Coinbase APIs to automatically update an investment or tracking account in YNAB. 
 
-**Action:** 
-I want to have an accurate view of my bet worth in YNAB
+## Tech Stack
 
-**The Problem:** 
-Currently, there is no official way to sync my Coinbase to my YNAB account. This gives me an incorrect view of my net worth
-
-**The Solution:** 
-Create a python script that gets my portfolio balance in Coinbase and makes a transaction/adjustment to an investment account in YNAB.
-
-The script should run every day at 8am.
-
-**Full Spec**
-- The script will run from the main function in main.py
-- The main function sets all the environmental variables it needs for the following functions
-- coinbase.py uses the Coinbase API to get my account balance for each wallet in Coinbase.
-- It contains a function that loops through each wallet balance and creates a total account balance from Coinbase
-
-- Next, the main funciton will run functions from the YNAB.py file. The YNAB.py contains functions that will take the data from the coinbase.py script and do the following:
-    - Use the YNAB API to get the current crypto account balance in YNAB
-    - Calculate how much needs to be adjusted in the YNAB account
-    - Create an transaction object for the YNAB Adjustment.
-    - Send transaction object to YNAB
-    - Return the adjustment amount made to YNAB
-- The create_message function creates a message based on the account adjustment. 
-    - An increase in the account account will create the following message:
-        - 'Coinbase adjustment created! Your Coinbase account is now at {current value}, up ${dollar amount} from last week 🥳'
-    - A decrease in the the account will create the following message:
-        - 'Coinbase adjustment created! Your Coinbase account is now at {current value}, down -${dollar amount} from last week 💩'
-- Finally, the main funciton will call the Discord send_message function in bot.py
-- bot.py will send the message thru the Discord API with the adjustment amount to my Bairrya server as Money Bot
-
-**Tech Stack**
-- [Python](https://www.python.org/)
+- [Python 3.9.6](https://www.python.org/)
 - [YNAB API](https://api.youneedabudget.com/v1)
-- [Discord API](https://realpython.com/how-to-make-a-discord-bot-python/)
 - [Coinbase Wallet API](https://developers.coinbase.com/docs/wallet/api-key-authentication)
 - [CoinAPI.io](https://www.coinapi.io/)
+  
+## Environment Variables
 
+To run this project, you will need to add the following environment variables to your .env file. The YNAB and Coinbase API keys are free and the CoinAPI is free up to 100 calls per day.
+
+**YNAB**
+
+`YNAB_TOKEN` 
+
+`BUDGET_ID` 
+
+`ACCOUNT_ID`
+
+**Coinbase**
+
+`COINBASE_KEY` 
+
+`COINBASE_SECRET`
+
+**CoinAPI**
+
+`EXCHANGE_KEY`
+
+## Future Development Plans
+
+- Add color tags to YNAB transactions based on positive or negative account changes
+- Add Discord bot integration
+- Filter out stablecoins such as USDC from portfolio balance that are used for purchases with the Coinbase debit card
+
+  
+## Acknowledgements
+- [Coinbase API Troubleshooting](https://stackoverflow.com/questions/66619124/coinbase-api-standard-python-example-returns-invalid-signature)
+
+
+## Feedback & Support
+
+If you have any feedback or need support, feel free to reach out at rjbaird09@gmail.com
+
+  
