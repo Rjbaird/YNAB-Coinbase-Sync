@@ -1,4 +1,3 @@
-
 # YNAB & Coinbase Sync
 ![Python](https://img.shields.io/badge/python-3.9.6-blue?style=for-the-badge&logo=python)&nbsp;
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?style=for-the-badge)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)&nbsp;
