@@ -1,6 +1,6 @@
 # YNAB & Coinbase Sync
-![Python](https://img.shields.io/badge/python-3.9.6-blue?style=for-the-badge&logo=python)&nbsp;
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?style=for-the-badge)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)&nbsp;
+![Python](https://img.shields.io/badge/python-3.9.6-blue?style=for-the-badge&logo=python)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?style=for-the-badge)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
 
 Currently, there is no official way to sync a [Coinbase](https://www.coinbase.com/) account to YNAB ([You Need A Budget](https://www.youneedabudget.com/)) for an accurate view of your Net Worth.
 
